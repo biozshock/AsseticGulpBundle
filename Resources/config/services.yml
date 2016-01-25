@@ -1,2 +1,2 @@
 parameters:
-    assetic.asset_factory.class: BiozshockAsseticGulpBundle\Assetic\AssetFactory
+    assetic.asset_factory.class: Biozshock\AsseticGulpBundle\Assetic\AssetFactory
