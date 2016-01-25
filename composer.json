@@ -1,0 +1,19 @@
+{
+  "name": "biozshock/assetic-gulp",
+  "version": "1.0.0",
+  "authors": [
+    {
+      "name": "Artem Lopata",
+      "email": "biozshock@gmail.com"
+    }
+  ],
+  "require": {
+    "symfony/assetic-bundle": "~2.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "Biozshock\\AsseticGulpBundle\\": ""
+    }
+  },
+  "minimum-stability": "stable"
+}
