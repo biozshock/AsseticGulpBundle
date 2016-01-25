@@ -91,7 +91,7 @@ class AsseticGulpConfigCommand extends AbstractCommand
 
         if (!$combine) {
             foreach ($asset as $leaf) {
-                $assets = array_merge($assets, $this->getGulpConfig($name, $leaf, $stdout));
+                $assets = array_merge($assets, $this->getGulpConfig($leaf, $stdout));
             }
         }
 
