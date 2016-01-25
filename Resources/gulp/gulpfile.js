@@ -4,7 +4,7 @@ maybe some of them are not actually that required :)
 
 sudo npm install -g gulp-less gulp-logger gulp gulp-cache gulp-concat gulp-debug \
  gulp-filter gulp-load-plugins gulp-sourcemaps gulp-uglify gulp-util gulp-changed \
- gulp-if merge-stream path del gulp-css-rebase-urls gulp-cssnano
+ gulp-if merge-stream path del gulp-rewrite-css gulp-cssnano
 
  */
 
