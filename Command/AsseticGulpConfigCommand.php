@@ -20,7 +20,7 @@ class AsseticGulpConfigCommand extends AbstractCommand
     {
         $this
             ->setName('assetic:gulp')
-            ->setDescription('Dumps all assets to the filesystem')
+            ->setDescription('Dumps all assets to the gulp config file')
             ->addArgument('write_to', InputArgument::OPTIONAL, 'Override the configured asset root')
             ->addArgument('config_path', InputArgument::OPTIONAL, 'Override config path')
         ;
