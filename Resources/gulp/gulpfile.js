@@ -4,7 +4,8 @@
 
  sudo npm install -g gulp-less gulp-logger gulp gulp-cache gulp-concat gulp-debug \
  gulp-filter gulp-load-plugins gulp-sourcemaps gulp-uglify gulp-util gulp-changed \
- gulp-if merge-stream path del gulp-rewrite-css gulp-cssnano gulp-watch gulp-plumber
+ gulp-if merge-stream path del gulp-rewrite-css gulp-cssnano gulp-watch gulp-plumber \
+ gulp-watch-less gulp-watch gulp-notify
 
  */
 
