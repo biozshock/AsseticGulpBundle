@@ -19,16 +19,6 @@ class GulpAsset
      */
     private $types = [];
 
-    public function addRootSource($root, $path)
-    {
-        // if path do not starts with /  and root do not have / at the end
-        if (strpos($path, '/') === 0 || strrpos($root, '/') !== strlen($root) - 1) {
-            $root .= '/';
-        }
-
-        $this->addSource($root . $path);
-    }
-
     /**
      * @param string $source
      */

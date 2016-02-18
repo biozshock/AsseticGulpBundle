@@ -14,7 +14,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class AsseticGulpConfigCommand extends AbstractCommand
 {
+    /**
+     * @var string
+     */
     private $configPath;
+
+    /**
+     * @var string
+     */
+    private $relative = null;
 
     protected function configure()
     {
@@ -23,12 +31,17 @@ class AsseticGulpConfigCommand extends AbstractCommand
             ->setDescription('Dumps all assets to the gulp config file')
             ->addArgument('write_to', InputArgument::OPTIONAL, 'Override the configured asset root')
             ->addArgument('config_path', InputArgument::OPTIONAL, 'Override config path')
+            ->addOption('absolute', 'a', null, 'Use absolute path in config')
         ;
     }
 
     protected function initialize(InputInterface $input, OutputInterface $stdout)
     {
         parent::initialize($input, $stdout);
+
+        if (!$input->getOption('absolute')) {
+            $this->relative = getcwd();
+        }
 
         if ($input->hasArgument('config_path') && $configPath = $input->getArgument('config_path')) {
             $this->configPath = $configPath;
@@ -143,7 +156,7 @@ class AsseticGulpConfigCommand extends AbstractCommand
             ));
 
             $gulpAsset = new GulpAsset();
-            $gulpAsset->setDestination($target);
+            $gulpAsset->setDestination($this->getPath($target));
             $asset = $this->resolveAsset($asset);
 
             $this->gulpAsset($gulpAsset, $asset, $stdout);
@@ -175,7 +188,14 @@ class AsseticGulpConfigCommand extends AbstractCommand
             $root = $asset->getSourceRoot();
             $path = $asset->getSourcePath();
 
-            $gulpAsset->addRootSource($root, $path);
+            // if path do not starts with /  and root do not have / at the end
+            if (strpos($path, '/') === 0 || strrpos($root, '/') !== strlen($root) - 1) {
+                $root .= '/';
+            }
+
+            $source = $this->getPath($root . $path);
+
+            $gulpAsset->addSource($source);
             $this->outputVerbosity($stdout, $root, $path);
         }
     }
@@ -187,5 +207,38 @@ class AsseticGulpConfigCommand extends AbstractCommand
         }
 
         return $asset;
+    }
+
+    private function getPath($path)
+    {
+        $path = static::normalizeRelativePath($path);
+
+        if ($this->relative) {
+            $path = ltrim(str_replace($this->relative, '', $path), '/');
+        }
+
+        return $path;
+    }
+
+    /**
+     * Normalize relative directories in a path.
+     *
+     * @param string $path
+     *
+     * @return string
+     */
+    public static function normalizeRelativePath($path)
+    {
+        // Path remove self referring paths ("/./").
+        $path = preg_replace('#/\.(?=/)|^\./|/\./?$#', '', $path);
+
+        // Regex for resolving relative paths
+        $regex = '#/*[^/\.]+/\.\.#Uu';
+
+        while (preg_match($regex, $path)) {
+            $path = preg_replace($regex, '', $path);
+        }
+
+        return $path;
     }
 }
