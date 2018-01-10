@@ -1,2 +1,10 @@
 parameters:
     assetic.asset_factory.class: Biozshock\AsseticGulpBundle\Assetic\AssetFactory
+
+services:
+    Biozshock\AsseticGulpBundle\Command\AsseticGulpConfigCommand:
+        class: Biozshock\AsseticGulpBundle\Command\AsseticGulpConfigCommand
+        calls:
+            - [ 'setContainer', ['@service_container'] ]
+        tags:
+            - { name: 'console.command', command: 'assetic:gulp' }

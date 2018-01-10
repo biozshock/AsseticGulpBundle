@@ -14,6 +14,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class AsseticGulpConfigCommand extends AbstractCommand
 {
+    protected static $defaultName = 'assetic:gulp';
+
     /**
      * @var string
      */
@@ -27,7 +29,7 @@ class AsseticGulpConfigCommand extends AbstractCommand
     protected function configure()
     {
         $this
-            ->setName('assetic:gulp')
+            ->setName(static::$defaultName)
             ->setDescription('Dumps all assets to the gulp config file')
             ->addArgument('write_to', InputArgument::OPTIONAL, 'Override the configured asset root')
             ->addArgument('config_path', InputArgument::OPTIONAL, 'Override config path')
